@@ -29,6 +29,13 @@ public class PlayerMovement : MonoBehaviour
         }
     
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime);
+        
+        if(transform.position.y >= 4f)
+        {
+            var vector3 = transform.position;
+            vector3.y = 4f;
+            transform.position = vector3;
+        }
     }
     
 }
