@@ -7,7 +7,6 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
-    private RectTransform _panelRectTransform;
     private int _score;
 
     public GameObject MainMenu;
