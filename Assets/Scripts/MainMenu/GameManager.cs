@@ -29,13 +29,18 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.touchCount > 0 && IsGameStarted == false || Input.GetKeyDown(KeyCode.Space) && IsGameStarted == false)
+        if (IsGameStarted == false || Input.GetKeyDown(KeyCode.Space) && IsGameStarted == false)
         {
-            _menuMover.Removing();
-            GamePause.ResumeGame();
-            MainMenu.SetActive(false);
-            IsGameStarted = true;
-            _spawner.StartSpawning();
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                _menuMover.Removing();
+                GamePause.ResumeGame();
+                MainMenu.SetActive(false);
+                IsGameStarted = true;
+                _spawner.StartSpawning();
+            }
         }
     }
 }
