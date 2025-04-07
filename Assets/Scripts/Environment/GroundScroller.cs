@@ -7,7 +7,7 @@ public class GroundScroller : MonoBehaviour
     public float scrollSpeed = 1f;
     private Material _material;
     private Vector2 _offset;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,9 @@ public class GroundScroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _material.mainTextureOffset += _offset * Time.deltaTime;
+        if (GamePause.IsGamePaused == false)
+        {
+            _material.mainTextureOffset += _offset * Time.deltaTime;
+        }
     }
 }

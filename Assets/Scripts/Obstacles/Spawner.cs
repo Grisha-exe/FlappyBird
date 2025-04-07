@@ -10,19 +10,26 @@ public class Spawner : MonoBehaviour
     public float maxSpawnTime = 2f; // Максимальный интервал спавна
     private readonly float _maxSpawnPositionY = -2.2f;
     private readonly float _minSpawnPositionY = -5.6f;
+    private bool _isCoroutineWorking;
 
-    void Start()
+    public void StartSpawning()
     {
+        _isCoroutineWorking = true;
         StartCoroutine(SpawnCoroutine());
+    }
+
+    public void StopSpawning()
+    {
+        _isCoroutineWorking = false;
     }
 
     IEnumerator SpawnCoroutine()
     {
-        while (true) // Бесконечный цикл
+        while (_isCoroutineWorking) // Бесконечный цикл
         {
             float waitTime = Random.Range(minSpawnTime, maxSpawnTime); // Рандомное время ожидания
             yield return new WaitForSeconds(waitTime);
-            
+
             GameObject obstacle = ObstaclePool.GetObject();
             obstacle.transform.position = new Vector2(12, Random.Range(_minSpawnPositionY, _maxSpawnPositionY));
         }

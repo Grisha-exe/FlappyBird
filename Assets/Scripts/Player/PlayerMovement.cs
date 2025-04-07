@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private AudioManager _audioManager;
     private Rigidbody2D _rigidbody2D;
     public float JumpForce = 5f;
 
@@ -22,11 +19,19 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Quaternion targetRotation = Quaternion.Euler(0f, 0f , _minRotation);
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _rigidbody2D.velocity = Vector2.up * JumpForce;
             transform.rotation = Quaternion.Euler(0, 0, _maxRotation);
+            _audioManager.FlyClip();
         }
+        
+        if (GamePause.IsGamePaused)
+        {
+            return;
+        }
+        
     
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime);
         

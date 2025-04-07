@@ -8,6 +8,9 @@ public class ObstacleMover : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (GamePause.IsGamePaused == false)
+        {
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
+        }
     }
 }

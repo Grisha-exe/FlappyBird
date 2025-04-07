@@ -1,21 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AddScorePoints : MonoBehaviour
 {
-    ScoreManager scoreManager;
-    void Start()
+    [SerializeField] private AudioManager _audioManager;
+    public ScoreManager ScoreManager;
+    
+    private void Awake()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
+        ScoreManager = FindObjectOfType<ScoreManager>(true);
+        _audioManager = FindObjectOfType<AudioManager>(true);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.gameObject.name);
         if (other.GetComponent<PlayerMarker>() != null)
         {
-            scoreManager.AddScore();
+            ScoreManager.AddScore();
+            _audioManager.AddScoreClip();
         }
     }
 }

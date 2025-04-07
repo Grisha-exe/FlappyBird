@@ -1,17 +1,25 @@
- using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _recordText;
-    public GameObject GameOverUI;
     private bool _isGameOver;
     private int _record;
+    private GameOverUIMover _gameOverUIMover;
+    public GameObject GameOverUI;
+    private Spawner _spawner;
+    private ObstacleDestroyer _obstacleDestroyer;
+    
 
+    private void Awake()
+    {
+        _gameOverUIMover = FindObjectOfType<GameOverUIMover>(true);
+        _spawner = FindObjectOfType<Spawner>(true);
+        _obstacleDestroyer = FindObjectOfType<ObstacleDestroyer>(true);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,17 +31,19 @@ public class GameOverManager : MonoBehaviour
 
     public void GameOver()
     {
+        GamePause.PauseGame();
+        _spawner.StopSpawning();
         _isGameOver = true;
         _record = PlayerPrefs.GetInt("Score");
         _recordText.text = _record.ToString();
         GameOverUI.SetActive(true);
-        Debug.Log("Game Over. Press Space to continue.");
+        _gameOverUIMover.Move();
     }
 
-    private void RestartGame()
+    private async void RestartGame()
     {
+        _gameOverUIMover.Removing();
+        await Task.Delay(1500);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        Time.timeScale = 1.0f;
     }
 }
