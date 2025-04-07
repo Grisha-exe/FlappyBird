@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGameStarted == false)
+        if (Input.touchCount > 0 && IsGameStarted == false || Input.GetKeyDown(KeyCode.Space) && IsGameStarted == false)
         {
             _menuMover.Removing();
             GamePause.ResumeGame();

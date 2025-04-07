@@ -15,7 +15,7 @@ public class ObstacleDestroyer : MonoBehaviour
     {
         if (GamePause.IsGamePaused == false)
         {
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(15f);
             _obstaclePool.ReturnObject(gameObject);
         }
     }

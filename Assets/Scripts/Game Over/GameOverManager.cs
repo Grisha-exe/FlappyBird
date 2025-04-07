@@ -23,7 +23,7 @@ public class GameOverManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isGameOver && Input.GetKeyDown(KeyCode.Space))
+        if (_isGameOver && Input.touchCount > 0 || Input.GetKeyDown(KeyCode.Space) && _isGameOver)
         {
             RestartGame();
         }
